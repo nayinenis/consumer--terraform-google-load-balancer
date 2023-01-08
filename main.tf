@@ -190,32 +190,32 @@ resource "google_storage_bucket_object" "not_found" {
 # IF SSL IS ENABLED, CREATE A SELF-SIGNED CERTIFICATE
 # ------------------------------------------------------------------------------
 
-resource "tls_self_signed_cert" "cert" {
-  # Only create if SSL is enabled
-  count = var.enable_ssl ? 1 : 0
+  # resource "tls_self_signed_cert" "cert" {
+  # # Only create if SSL is enabled
+  # count = var.enable_ssl ? 1 : 0
 
-  key_algorithm   = "RSA"
-  private_key_pem = join("", tls_private_key.private_key.*.private_key_pem)
+  # key_algorithm   = "RSA"
+  # private_key_pem = join("", tls_private_key.private_key.*.private_key_pem)
 
-  subject {
-    common_name  = var.custom_domain_name
-    organization = "Examples, Inc"
-  }
+  # subject {
+  #   common_name  = var.custom_domain_name
+  #   organization = "Examples, Inc"
+  # }
 
-  validity_period_hours = 12
+  # validity_period_hours = 12
 
-  allowed_uses = [
-    "key_encipherment",
-    "digital_signature",
-    "server_auth",
-  ]
-}
+#   allowed_uses = [
+#     "key_encipherment",
+#     "digital_signature",
+#     "server_auth",
+#   ]
+# }
 
-resource "tls_private_key" "private_key" {
-  count       = var.enable_ssl ? 1 : 0
-  algorithm   = "RSA"
-  ecdsa_curve = "P256"
-}
+# resource "tls_private_key" "private_key" {
+#   count       = var.enable_ssl ? 1 : 0
+#   algorithm   = "RSA"
+#   ecdsa_curve = "P256"
+# }
 
 # ------------------------------------------------------------------------------
 # CREATE A CORRESPONDING GOOGLE CERTIFICATE THAT WE CAN ATTACH TO THE LOAD BALANCER
